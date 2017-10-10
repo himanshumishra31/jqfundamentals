@@ -2,25 +2,32 @@ function InputHint(data) {
   this.input_area = data.field_selector;
   this.class_name = data.class_name;
   this.hint_text = data.hint_text;
-}
-
-InputHint.prototype.addClass = function(toAdd) {
-  toAdd ? this.input_area.addClass(this.class_name) : this.input_area.removeClass(this.class_name);
+  this.label = data.label;
 }
 
 InputHint.prototype.hintText = function(toAdd) {
-  toAdd ? this.input_area.val(this.hint_text) : this.input_area.removeAttr('value');
+  if(toAdd) {
+    if(!this.input_area.val().trim()) {
+      this.input_area.val(this.hint_text);
+      this.input_area.addClass(this.class_name);
+    }
+  } else {
+    // if(!this.input_area)
+    // console.log(this.input_area.value);
+    if(this.input_area.val() == this.hint_text) {
+      this.input_area.removeAttr('value');
+      this.input_area.removeClass(this.class_name);
+    }
+  }
 }
 
 InputHint.prototype.removeLabel = function() {
-  this.input_area.prev().remove();
 }
 
 InputHint.prototype.eventHandler = function(eventName) {
   var _this = this;
   return function() {
     _this.hintText((eventName == 'focus') ? false : true);
-    _this.addClass((eventName == 'focus') ? false : true);
   }
 }
 
@@ -28,30 +35,24 @@ InputHint.prototype.bindEvent = function(eventName) {
   this.input_area.bind(eventName, this.eventHandler(eventName));
 }
 
+InputHint.prototype.init = function() {
+  this.hintText(true);
+  this.label.remove();
+  this.bindEvent('focus');
+  this.bindEvent('blur');
+
+}
 
 $(document).ready(function() {
-
+  var input_field_selector = $('input[name="q"]');
+  var label_field_selector = input_field_selector.parent().find('label[for="q"]');
   var data = {
-    field_selector: $('input[name="q"]'),
+    field_selector: input_field_selector,
     class_name :'hint',
-    hint_text : $('input[name="q"]').prev().text()
+    label : label_field_selector,
+    hint_text : label_field_selector.text()
   }
 
   var inputHintObject = new InputHint(data);
-
-  // 1. Set the value of the search input to the text of the label element
-  inputHintObject.hintText(true);
-
-  // 2. Add a class of "hint" to the search input
-  inputHintObject.addClass(true);
-
-  // 3. Remove the label element
-  inputHintObject.removeLabel();
-
-  // 4. Bind a focus event to the search input that removes the hint text and the "hint" class
-  inputHintObject.bindEvent('focus');
-
-  // 5. Bind a blur event to the search input that restores the hint text and "hint" class if no search text was entered
-  inputHintObject.bindEvent('blur');
-
+  inputHintObject.init();
 })
