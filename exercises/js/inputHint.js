@@ -12,8 +12,6 @@ InputHint.prototype.hintText = function(toAdd) {
       this.input_area.addClass(this.class_name);
     }
   } else {
-    // if(!this.input_area)
-    // console.log(this.input_area.value);
     if(this.input_area.val() == this.hint_text) {
       this.input_area.removeAttr('value');
       this.input_area.removeClass(this.class_name);
