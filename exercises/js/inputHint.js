@@ -5,27 +5,23 @@ function InputHint(data) {
   this.label = data.label;
 }
 
-InputHint.prototype.hintText = function(toAdd) {
-  if(toAdd) {
-    if(!this.input_area.val().trim()) {
-      this.input_area.val(this.hint_text);
-      this.input_area.addClass(this.class_name);
-    }
-  } else {
-    if(this.input_area.val() == this.hint_text) {
-      this.input_area.removeAttr('value');
-      this.input_area.removeClass(this.class_name);
-    }
-  }
+InputHint.prototype.fieldEvent = function(isFocus) {
+  isFocus ? this.input_area.removeAttr('value') : this.input_area.val(this.hint_text);
+  isFocus ? this.input_area.removeClass(this.class_name) : this.input_area.addClass(this.class_name);
 }
 
-InputHint.prototype.removeLabel = function() {
+InputHint.prototype.hintText = function(toAdd) {
+  if(toAdd) {
+    this.input_area.val().trim() ? '' : this.fieldEvent(false);
+  } else {
+    this.input_area.val() == this.hint_text ? this.fieldEvent(true) : '';
+  }
 }
 
 InputHint.prototype.eventHandler = function(eventName) {
   var _this = this;
   return function() {
-    _this.hintText((eventName == 'focus') ? false : true);
+    _this.hintText((eventName == 'blur'));
   }
 }
 
@@ -38,7 +34,6 @@ InputHint.prototype.init = function() {
   this.label.remove();
   this.bindEvent('focus');
   this.bindEvent('blur');
-
 }
 
 $(document).ready(function() {
