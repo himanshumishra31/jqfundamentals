@@ -42,13 +42,13 @@ InputHint.prototype.init = function() {
 }
 
 $(document).ready(function() {
-  var input_field_selector = $('input[name="q"]');
-  var label_field_selector = input_field_selector.parent().find('label[for="q"]');
+  var inputFieldSelector = $('input[name="q"]');
+  var labelFieldSelector = inputFieldSelector.parent().find('label[for="q"]');
   var data = {
-    field_selector: input_field_selector,
+    field_selector: inputFieldSelector,
     className: 'hint',
-    label: label_field_selector,
-    hintText: label_field_selector.text()
+    label: labelFieldSelector,
+    hintText: labelFieldSelector.text()
   }
 
   var inputHintObject = new InputHint(data);
