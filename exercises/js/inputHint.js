@@ -1,16 +1,16 @@
 function InputHint(data) {
-  this.input_area = data.field_selector;
-  this.class_name = data.class_name;
-  this.hint_text = data.hint_text;
+  this.inputArea = data.field_selector;
+  this.className = data.className;
+  this.hintText = data.hintText;
   this.label = data.label;
 }
 
 InputHint.prototype.focusHandlerEvent = function() {
   var _this = this;
   return function() {
-    if(_this.input_area.val() == _this.hint_text) {
-      _this.input_area.removeClass(_this.class_name);
-      _this.input_area.removeAttr('value');
+    if(_this.inputArea.val() == _this.hintText) {
+      _this.inputArea.removeClass(_this.className);
+      _this.inputArea.removeAttr('value');
     }
   }
 }
@@ -18,24 +18,24 @@ InputHint.prototype.focusHandlerEvent = function() {
 InputHint.prototype.blurHandlerEvent = function() {
   var _this = this;
   return function() {
-    if(!_this.input_area.val().trim()) {
-      _this.input_area.addClass(_this.class_name);
-      _this.input_area.val(_this.hint_text);
+    if(!_this.inputArea.val().trim()) {
+      _this.inputArea.addClass(_this.className);
+      _this.inputArea.val(_this.hintText);
     }
   }
 }
 
 InputHint.prototype.blurHandler = function() {
-  this.input_area.bind('blur', this.blurHandlerEvent());
+  this.inputArea.bind('blur', this.blurHandlerEvent());
 }
 
 InputHint.prototype.focusHandler = function() {
-  this.input_area.bind('focus', this.focusHandlerEvent());
+  this.inputArea.bind('focus', this.focusHandlerEvent());
 }
 
 InputHint.prototype.init = function() {
-  this.input_area.val(this.hint_text);
-  this.input_area.addClass(this.class_name);
+  this.inputArea.val(this.hintText);
+  this.inputArea.addClass(this.className);
   this.label.remove();
   this.blurHandler();
   this.focusHandler();
@@ -46,9 +46,9 @@ $(document).ready(function() {
   var label_field_selector = input_field_selector.parent().find('label[for="q"]');
   var data = {
     field_selector: input_field_selector,
-    class_name: 'hint',
+    className: 'hint',
     label: label_field_selector,
-    hint_text: label_field_selector.text()
+    hintText: label_field_selector.text()
   }
 
   var inputHintObject = new InputHint(data);
