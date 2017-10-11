@@ -8,13 +8,13 @@ $(document).ready(function() {
 
   $("#myListItem");
   $("#myList li:nth-child(3)");
-  $("#listItem_2 + li");
+  $("#myList").children().eq(2);
 
   // 3. Select the label for the search input using an attribute selector.
   $("label[for='q']");
 
   // 4. Figure out how many elements on the page are hidden
-  var numberOfHiddenELements = $('html').find(':hidden').length;
+  var numberOfHiddenELements = $('body').find(':hidden').length;
   console.log(numberOfHiddenELements);
 
   // 5. Figure out how many image elements on the page have an alt attribute.
