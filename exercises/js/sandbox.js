@@ -8,11 +8,15 @@ $(document).ready(function() {
   $('#myList li:nth-child(odd)').remove();
 
   // 3. Add another h2 and another paragraph to the last div.module
-  $("<h2>Another Heading</h2>").appendTo("div.module:last");
-  $("<p>Another paragraph</p>").appendTo("div.module:last");
+  var lastDiv = $('div.module').last();
+  var domElementH2 = $('<h2>').text('Another Heading');
+  var domElementPara = $('<p>').text('Another paragraph');
+  lastDiv.append(domElementH2);
+  lastDiv.append(domElementPara);
 
   // 4. Add another option to the select element; give the option the value "Wednesday"
-  $("<option>Wednesday</option>").appendTo('select[name="day"]');
+  var domElementOption = $('<option>').text('Wednesday');
+  domElementOption.appendTo('select[name="day"]');
 
   // 5. Add a new div.module to the page after the last one; put a copy of one of the existing images inside of it.
   $('div.module:last').clone().insertAfter('div.module:last');
