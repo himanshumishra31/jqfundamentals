@@ -171,7 +171,6 @@ body {
 }
 
 #nav li.selected {
-	background-color: red;
 	font-weight: normal;
 }
 
@@ -325,5 +324,5 @@ margin: 15px 0;
 	height: 10000px;
 	background-color: #333;
 	z-index: 100;
-	
+
 }
