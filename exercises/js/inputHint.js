@@ -1,5 +1,5 @@
 function InputHint(data) {
-  this.inputArea = data.field_selector;
+  this.inputArea = data.fieldSelector;
   this.className = data.className;
   this.hintText = data.hintText;
   this.label = data.label;
@@ -45,7 +45,7 @@ $(document).ready(function() {
   var inputFieldSelector = $('input[name="q"]');
   var labelFieldSelector = inputFieldSelector.parent().find('label[for="q"]');
   var data = {
-    field_selector: inputFieldSelector,
+    fieldSelector: inputFieldSelector,
     className: 'hint',
     label: labelFieldSelector,
     hintText: labelFieldSelector.text()
