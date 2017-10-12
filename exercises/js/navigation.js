@@ -3,21 +3,25 @@ function DropDownMenu(data) {
 }
 
 DropDownMenu.prototype.hoverIn = function(index) {
-  $(this).children('ul').show();
-  $(this).addClass('hover');
-}
+  var $this = $(this);
+  $this.children('ul').show();
+  $this.addClass('hover');
+};
 
 DropDownMenu.prototype.hoverOut = function(index) {
-  $(this).children('ul').hide();
-  $(this).removeClass('hover');
-}
+  var $this = $(this);
+  $this.children('ul').hide();
+  $this.removeClass('hover');
+};
 
 DropDownMenu.prototype.init = function() {
-  this.nav.hover(this.hoverIn,this.hoverOut);
-}
+  this.nav.hover(this.hoverIn, this.hoverOut);
+};
 
 $(document).ready(function() {
-  var data = { nav : $('#nav > li') }
+  var data = {
+    nav : $('#nav > li')
+  };
   var dropDownMenuObject = new DropDownMenu(data);
   dropDownMenuObject.init();
-})
+});
