@@ -1,28 +1,21 @@
 function HeadlineEffect(data) {
   this.links = data.links;
-  this.pClass = data.pClass;
 }
 
-HeadlineEffect.prototype.eventHandler = function(blogLinkNumber) {
-  var _this = this;
-  return function(event) {
-    event.preventDefault();
-    _this.links.parent().siblings(_this.pClass).slideUp();
-    _this.links.eq(blogLinkNumber).parent().siblings(_this.pClass).slideDown();
-  };
+HeadlineEffect.prototype.eventHandler = function(event) {
+  event.preventDefault();
+  var $this = $(this);
+  $this.closest('li').siblings('li').find('p.excerpt').slideUp();
+  $this.closest('h3').siblings('p.excerpt').slideDown();
 };
 
 HeadlineEffect.prototype.init = function() {
-  var _this = this;
-  this.links.each(function(index) {
-    _this.links.eq(index).bind('click', _this.eventHandler(index));
-  });
+  this.links.click(this.eventHandler);
 };
 
 $(document).ready(function() {
   var data = {
     links: $('#blog a'),
-    pClass : 'p.excerpt'
   };
   var headlineEffectObject = new HeadlineEffect(data);
   headlineEffectObject.init();
