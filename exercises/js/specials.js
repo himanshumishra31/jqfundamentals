@@ -6,6 +6,7 @@ LoadContentJson.prototype.init = function() {
   $('<div>', { id:"checkBoxTarget" }).insertAfter(this.specialsDiv.find('form'));
   this.specialsDiv.find('li.buttons').remove();
   this.specialsDiv.find('form').find('select').change(this.eventHandler());
+  this.targetDiv = $('#checkBoxTarget');
 };
 
 
@@ -13,8 +14,8 @@ LoadContentJson.prototype.eventHandler = function() {
   var _this = this;
   return function() {
     _this.getInfo($(this).val());
-  }
-}
+  };
+};
 
 LoadContentJson.prototype.getInfo = function(selectedVal) {
   var _this = this;
@@ -30,13 +31,11 @@ LoadContentJson.prototype.getInfo = function(selectedVal) {
 };
 
 LoadContentJson.prototype.targetDivValue = function(jsonResponseInfo) {
-  this.targetDiv = $('#checkBoxTarget');
   if(jsonResponseInfo) {
     this.targetDiv.css('color', jsonResponseInfo.color);
     this.targetDiv.attr('title', jsonResponseInfo.title);
     this.targetDiv.text(jsonResponseInfo.text);
-    var img = jsonResponseInfo.image;
-    this.targetDiv.append($('<img>', {src : img.slice(1)}));
+    this.targetDiv.append($('<img>', {src : jsonResponseInfo.image.slice(1)}));
   }
 };
 
