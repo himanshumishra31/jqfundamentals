@@ -25,7 +25,7 @@ LoadContentJson.prototype.getInfo = function(selectedVal) {
     dataType : 'json',
   }).done(function(jsonResponse) {
     _this.targetDivValue(jsonResponse[selectedVal]);
-  }).fail(function(xhr, status, errorThrown) {
+  }).fail(function() {
     alert("Error occured");
   });
 };
