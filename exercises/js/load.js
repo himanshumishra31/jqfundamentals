@@ -14,16 +14,8 @@ LoadData.prototype.eventHandler = function() {
 LoadData.prototype.loadContent = function(currentBlog) {
   var hrefValue = $(currentBlog).attr('href'),
       targetElement = $(currentBlog).parent().siblings(this.divTargetSelector);
-  // this.loadContentInDiv(targetElement, hrefValue);
   targetElement.load(hrefValue.replace('#', ' #'));
 };
-
-// LoadData.prototype.loadContentInDiv = function(targetElement, hrefValue) {
-//   targetElement.load(hrefValue.replace('#', ' #'));
-
-//   // var finalUrl2 = hrefValue.replace('#', ' #');
-//   // console.log(finalUrl2);
-// };
 
 LoadData.prototype.createTargetDiv = function() {
   var _this = this;
