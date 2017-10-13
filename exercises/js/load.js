@@ -1,5 +1,6 @@
 function LoadData(data) {
   this.blogLinks = data.blogLinks;
+  this.divAttribute = data.divAttribute;
 }
 
 LoadData.prototype.eventHandler = function() {
@@ -11,35 +12,38 @@ LoadData.prototype.eventHandler = function() {
 };
 
 LoadData.prototype.loadContent = function(currentBlog) {
-  var hrefValue = $(currentBlog).attr('href');
-  var targetElement = $(currentBlog).closest('h3').siblings('div#targetDiv');
-  this.loadContentInDiv(targetElement, hrefValue);
+  var hrefValue = $(currentBlog).attr('href'),
+      targetElement = $(currentBlog).parent().siblings(this.divTargetSelector);
+  // this.loadContentInDiv(targetElement, hrefValue);
+  targetElement.load(hrefValue.replace('#', ' #'));
 };
 
-LoadData.prototype.loadContentInDiv = function(targetElement, hrefValue) {
-  var contentIdIndex = hrefValue.lastIndexOf('#'),
-      contentId = hrefValue.slice(contentIdIndex),
-      contentUrl = hrefValue.slice(0, contentIdIndex),
-      finalUrl = contentUrl + ' ' + contentId;
-  targetElement.load(finalUrl);
-};
+// LoadData.prototype.loadContentInDiv = function(targetElement, hrefValue) {
+//   targetElement.load(hrefValue.replace('#', ' #'));
+
+//   // var finalUrl2 = hrefValue.replace('#', ' #');
+//   // console.log(finalUrl2);
+// };
 
 LoadData.prototype.createTargetDiv = function() {
+  var _this = this;
   this.blogLinks.each(function() {
     var $this = $(this);
-    $('<div id="targetDiv">').data('divReference', $this.closest('h3')).insertAfter($this.parent());
+    $('<div>', { id: "targetDiv" }).data(_this.divAttribute, $this.parent()).insertAfter($this.parent());
     $this.attr('href', 'data/' + $this.attr('href'));
   });
 };
 
 LoadData.prototype.init = function() {
   this.createTargetDiv();
+  this.divTargetSelector = 'div#targetDiv';
   this.blogLinks.click(this.eventHandler());
 };
 
 $(document).ready(function() {
   var data = {
-    blogLinks: $('#blog').find('a')
+    blogLinks: $('#blog').find('a'),
+    divAttribute: 'divReference'
   };
 
   var loadDataObject = new LoadData(data);
