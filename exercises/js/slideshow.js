@@ -3,28 +3,32 @@ function SlideShow(data) {
   this.slideshowImages = data.slideshowImages;
   this.slideshowLength = this.slideshowImages.length;
   this.currentSlide = 0;
+  this.fadeInSeconds = data.fadeInSeconds;
+  this.fadeOutSeconds = data.fadeOutSeconds;
 }
 
 SlideShow.prototype.createSlideShow = function() {
   var _this = this;
-  this.slideshowImages.eq(this.currentSlide).fadeIn(1000, _this.createNavBarDetails()).delay(2000).fadeOut(1000, function() {
+  this.slideshowImages.eq(this.currentSlide).fadeIn(_this.fadeInSeconds, _this.createNavBarDetails()).delay(_this.fadeOutSeconds).fadeOut(_this.fadeInSeconds, function() {
     _this.currentSlide < _this.slideshowLength - 1 ? _this.currentSlide++ : _this.currentSlide = 0;
     _this.createSlideShow();
   });
 };
 
 SlideShow.prototype.createNavBar = function() {
-  var nav = $('<ul id="navBar">');
-  var navBarli = $('<li id="currentImage">');
-  var navBarlitotal = $('<li id="totalImage">');
+  var nav = $('<ul>', { id: "navBar" }),
+      navBarli = $('<li>', { id: "currentImage" }),
+      navBarlitotal = $('<li>',{ id: "totalImage" });
   nav.appendTo(this.slideshowUl);
   navBarli.appendTo('#navBar');
   navBarlitotal.appendTo('#navBar');
+  this.totalImage = $('#totalImage');
+  this.currentImage = $('#currentImage');
 };
 
 SlideShow.prototype.createNavBarDetails = function() {
-  $('#currentImage').text('Currently viewing : ' + this.slideshowImages.eq(this.currentSlide).find('h2').text() );
-  $('#totalImage').text('Total Images : ' + this.slideshowLength );
+  this.currentImage.text('Currently viewing : ' + this.slideshowImages.eq(this.currentSlide).find('h2').text() );
+  this.totalImage.text('Total Images : ' + this.slideshowLength );
 };
 
 SlideShow.prototype.init = function() {
@@ -35,11 +39,13 @@ SlideShow.prototype.init = function() {
 };
 
 $(document).ready(function(){
-  var slideshow = $('#slideshow');
-  var data = {
-    slideshowUl: slideshow,
-    slideshowImages: slideshow.children('li')
-  };
-  var slideshowObject = new SlideShow(data);
+  var slideshow = $('#slideshow'),
+      data = {
+        slideshowUl: slideshow,
+        slideshowImages: slideshow.children('li'),
+        fadeInSeconds: 1000,
+        fadeOutSeconds: 2000
+      },
+      slideshowObject = new SlideShow(data);
   slideshowObject.init();
 });
