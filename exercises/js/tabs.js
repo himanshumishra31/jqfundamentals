@@ -4,35 +4,23 @@ function TabNagivation (data) {
 }
 
 TabNagivation.prototype.createUL = function() {
-  $('<ul id="tabs">').insertBefore(this.modules.eq(0));
+  $('<ul id="tabs">').insertBefore(this.modules);
 };
 
 TabNagivation.prototype.createNavigationBar = function() {
-  var _this = this;
   this.modules.each(function(index) {
-    $('<li>').text(_this.modules.eq(index).children('h2').text()).appendTo('#tabs');
+    $('<li>').text($(this).children('h2').text()).data("name", $(this)).appendTo('#tabs');
   });
   this.list = $('#tabs').children('li');
 };
 
 TabNagivation.prototype.eventHandler = function() {
-  var _this = this;
-  return function() {
-    var that = this;
-    _this.modules.each(function(index) {
-      if(_this.modules.eq(index).children('h2').text() == $(that).text()) {
-        _this.modules.eq(index).show();
-        _this.modules.eq(index).addClass(_this.className);
-      } else {
-        _this.modules.eq(index).hide();
-        _this.modules.eq(index).removeClass(_this.className);
-      }
-    });
-  };
+  $(this).siblings().data('name').removeClass('current').hide();
+  $(this).data('name').addClass('current').show();
 };
 
 TabNagivation.prototype.createNavigator = function() {
-  this.list.click(this.eventHandler());
+  this.list.click(this.eventHandler);
 };
 
 TabNagivation.prototype.init = function() {
