@@ -9,14 +9,14 @@ TabNagivation.prototype.createUL = function() {
 
 TabNagivation.prototype.createNavigationBar = function() {
   this.modules.each(function(index) {
-    $('<li>').text($(this).children('h2').text()).data("name", $(this)).appendTo('#tabs');
+    $('<li>').text($(this).children('h2').text()).data('divReference', $(this)).appendTo('#tabs');
   });
   this.list = $('#tabs').children('li');
 };
 
 TabNagivation.prototype.eventHandler = function() {
-  $(this).siblings().data('name').removeClass('current').hide();
-  $(this).data('name').addClass('current').show();
+  $(this).siblings().data('divReference').removeClass('current').hide();
+  $(this).data('divReference').addClass('current').show();
 };
 
 TabNagivation.prototype.createNavigator = function() {
