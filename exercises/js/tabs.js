@@ -1,6 +1,5 @@
 function TabNagivation (data) {
   this.modules = data.modules;
-  this.className = data.className;
 }
 
 TabNagivation.prototype.createUL = function() {
@@ -33,9 +32,7 @@ TabNagivation.prototype.init = function() {
 $(document).ready(function() {
   var data = {
     modules: $('.module'),
-    className: 'current'
   };
-
   var tabNavigationObject = new TabNagivation(data);
   tabNavigationObject.init();
 });
