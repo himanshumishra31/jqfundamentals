@@ -3,7 +3,7 @@ function TabNagivation (data) {
 }
 
 TabNagivation.prototype.createUL = function() {
-  $('<ul id="tabs">').insertBefore(this.modules);
+  $('<ul>', { id: "tabs" }).insertBefore(this.modules);
 };
 
 TabNagivation.prototype.createNavigationBar = function() {
@@ -14,8 +14,9 @@ TabNagivation.prototype.createNavigationBar = function() {
 };
 
 TabNagivation.prototype.eventHandler = function() {
-  $(this).siblings().data('divReference').removeClass('current').hide();
-  $(this).data('divReference').addClass('current').show();
+  var $this = $(this);
+  $this.siblings().data('divReference').removeClass('current').hide();
+  $this.data('divReference').addClass('current').show();
 };
 
 TabNagivation.prototype.createNavigator = function() {
@@ -31,7 +32,7 @@ TabNagivation.prototype.init = function() {
 
 $(document).ready(function() {
   var data = {
-    modules: $('.module'),
+    modules: $('.module')
   };
   var tabNavigationObject = new TabNagivation(data);
   tabNavigationObject.init();
