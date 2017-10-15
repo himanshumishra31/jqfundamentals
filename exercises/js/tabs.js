@@ -8,26 +8,28 @@ TabNagivation.prototype.createUL = function() {
 
 TabNagivation.prototype.createNavigationBar = function() {
   this.modules.each(function(index) {
-    $('<li>').text($(this).children('h2').text()).data('divReference', $(this)).appendTo('#tabs');
+    $('<li>').text($(this).children('h2').text()).data('targetDiv', $(this)).appendTo('#tabs');
   });
-  this.list = $('#tabs').children('li');
+  this.liCollection = $('#tabs').children('li');
 };
 
-TabNagivation.prototype.eventHandler = function() {
-  var $this = $(this);
-  $this.siblings().data('divReference').removeClass('current').hide();
-  $this.data('divReference').addClass('current').show();
+TabNagivation.prototype.showDiv = function() {
+  var that = this;
+  return function () {
+    that.modules.removeClass('current').hide();
+    $(this).data('targetDiv').addClass('current').show();
+  }
 };
 
-TabNagivation.prototype.createNavigator = function() {
-  this.list.click(this.eventHandler);
+TabNagivation.prototype.bindEvent = function() {
+  this.liCollection.click(this.showDiv());
 };
 
 TabNagivation.prototype.init = function() {
   this.modules.hide();
   this.createUL();
   this.createNavigationBar();
-  this.createNavigator();
+  this.bindEvent();
 };
 
 $(document).ready(function() {
