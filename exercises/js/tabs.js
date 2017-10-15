@@ -18,7 +18,7 @@ TabNagivation.prototype.showDiv = function() {
   return function () {
     that.modules.removeClass('current').hide();
     $(this).data('targetDiv').addClass('current').show();
-  }
+  };
 };
 
 TabNagivation.prototype.bindEvent = function() {
