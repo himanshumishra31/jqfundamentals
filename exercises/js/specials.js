@@ -3,8 +3,8 @@ function LoadContentJson(data) {
 }
 
 LoadContentJson.prototype.init = function() {
-  var divElement = $('<div>', { id:"checkBoxTarget" });
-  divElement.insertAfter(this.specialsDiv.find('form'));
+  this.divElement = $('<div>', { id:"checkBoxTarget" });
+  this.divElement.insertAfter(this.specialsDiv.find('form'));
   this.specialsDiv.find('li.buttons').remove();
   this.specialsDiv.find('form').find('select').change(this.eventHandler());
 };
@@ -32,10 +32,10 @@ LoadContentJson.prototype.getInfo = function(selectedVal) {
 
 LoadContentJson.prototype.targetDivValue = function(jsonResponseInfo) {
   if(jsonResponseInfo) {
-    $('#checkBoxTarget').css('color', jsonResponseInfo.color)
+    this.divElement.css('color', jsonResponseInfo.color)
              .attr('title', jsonResponseInfo.title)
              .text(jsonResponseInfo.text)
-             .append($('<img>', {src : jsonResponseInfo.image.slice(1)}));
+             .append($('<img>', {src : jsonResponseInfo.image}));
   }
 };
 
